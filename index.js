@@ -2,9 +2,10 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-kojac',
+  name: 'ember-kojac'
 
-  isDevelopingAddon() {
-    return true;
-  }
+  // see https://github.com/ember-cli/ember-cli/pull/1785
+  // isDevelopingAddon() {
+  //   return true;
+  // }
 };
