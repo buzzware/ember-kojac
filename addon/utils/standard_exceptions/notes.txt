@@ -1,0 +1,2 @@
+http://borgs.cybrilla.com/tils/custom-exceptions-es6/
+

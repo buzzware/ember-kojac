@@ -1,0 +1,10 @@
+{
+  "name": "ember-kojac",
+  "keywords": [
+    "ember-addon"
+  ],
+  "dependencies": {
+    "ember-cli-babel": "^6.0.0",
+    "jquery": "^1.9"
+  }
+}
