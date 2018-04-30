@@ -16,7 +16,7 @@ libpeerconnection.log
 npm-debug.log*
 yarn-error.log
 testem.log
-.idea
+.idea/
 .DS_Store
 
 
