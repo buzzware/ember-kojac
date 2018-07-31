@@ -8,7 +8,4 @@ var _Kojac = class {
 	}
 
 };
-_Kojac
-
-
 export default _Kojac;

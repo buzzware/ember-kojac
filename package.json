@@ -20,7 +20,8 @@
   },
   "dependencies": {
     "ember-cli-babel": "^6.6.0",
-    "jquery": "^1.9"
+    "jquery": "^1.9",
+    "ember-lodash": "^4.17.5"
   },
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
