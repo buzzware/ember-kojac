@@ -71,7 +71,8 @@ export default class {
 	newRequest(aOptions) {
 		if (!aOptions)
 			aOptions = {};
-		aOptions = _.extend(aOptions, {kojac: this});
+		aOptions = _.extend(aOptions, {});
+		aOptions.kojac = this;
 		if (!(this.chaining in aOptions)) {
 			aOptions.chaining = this.apiVersion != 2
 		}

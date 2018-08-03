@@ -519,7 +519,6 @@ var formatRegexes = {};
 // Could support _.format("{number} {street}, {suburb}", {number: 27, street: "Constant St", suburb: "Highgate"}); - might already
 // see http://stackoverflow.com/questions/2534803/string-format-in-javascript/2534870#2534870
 bf.format = function (aFormat, aValues) {
-	var src, v;
 	if (_.isObject(aValues)) {
 		for (var p in aValues)
 			aFormat = aFormat.replace(formatRegexes[p] || (formatRegexes[p] = RegExp('\\{' + p + '\\}', 'gm')), aValues[p]);

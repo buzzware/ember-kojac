@@ -1,4 +1,11 @@
 import Ember from 'ember';
+import EmberObject from '@ember/object';
+import { defineProperty } from '@ember/object';
+import { computed } from '@ember/object';
+import ObjectProxy from '@ember/object/proxy';
+import { set,get,setProperties } from '@ember/object';
+import { cacheFor } from '@ember/object/internals';
+
 import _ from 'lodash';
 import bf from 'ember-kojac/utils/BuzzFunctions';
 import Kojac from 'ember-kojac/utils/Kojac';
@@ -8,7 +15,6 @@ import EmberFramework from 'ember-kojac/utils/ember/EmberFramework';
 import KojacEmberUtils from 'ember-kojac/utils/ember/KojacEmberUtils';
 import createClassComputed from 'ember-macro-helpers/create-class-computed';
 //import { computed } from '@ember/object/computed';
-import { computed } from '@ember/object';
 import BufferedProxy from 'ember-buffered-proxy/proxy';
 
 
@@ -22,7 +28,7 @@ var descFor = function(aObject,aKey) {
 	return m && m.descs[aKey];
 };
 
-var kem = Ember.Object.extend(Ember.Copyable,{
+var kem = EmberObject.extend(Ember.Copyable,{
 
   _cache: null,   // the cache this model is in, for binding relationships
 
@@ -42,7 +48,7 @@ var kem = Ember.Object.extend(Ember.Copyable,{
 	// copy the property from source to dest
 	// this could be a static fn
 	toJsonoCopyFn: function(aDest,aSource,aProperty,aOptions) {
-		aDest[aProperty] = KojacUtils.toJsono(Ember.get(aSource,aProperty),aOptions);
+		aDest[aProperty] = KojacUtils.toJsono(get(aSource,aProperty),aOptions);
 	},
 
 	// return array of names, or an object and all keys will be used
@@ -106,11 +112,11 @@ kem.reopenClass({
 
 				if (destType) {
 
-					extender[p] = Ember.computed({
+					extender[p] = computed({
 				    get(aKey) {
 					    var d = descFor(this,aKey);
 							var v;
-					    v = Ember.cacheFor(this,aKey);
+					    v = cacheFor(this,aKey);
 							if (typeof v != 'undefined') {
 								return v;
 					    } else {
@@ -180,22 +186,22 @@ kem.reopenClass({
 
 
 kem.belongsTo = function(aIdProperty,aResource) {
-  return Ember.computed(aIdProperty, function(){
-    var id = Ember.get(this,aIdProperty);
+  return computed(aIdProperty, function(){
+    var id = get(this,aIdProperty);
     if (!id)
       return null;
-    var cache = Ember.get(this,'_cache');
+    var cache = get(this,'_cache');
     var key = KojacUtils.keyJoin(aResource,id);
     if (!key || !cache)
       return null;
-    return Ember.get(cache,key);
+    return get(cache,key);
   }).property('_cache',aIdProperty);
 };
 
 kem.numeratedCollection = function(aPrefix,aMaxCount,aCountProperty=null) {
   aCountProperty = aCountProperty || aPrefix+'Count';
   let props = _.concat(aCountProperty, bf.numerate(aPrefix, aMaxCount));
-  return Ember.computed(...props, function () {
+  return computed(...props, function () {
     let count = this.get(aCountProperty);
     if (!count)
       return [];
@@ -204,7 +210,7 @@ kem.numeratedCollection = function(aPrefix,aMaxCount,aCountProperty=null) {
 };
 
 kem.editProxyFor = function(aSource) {
-  return Ember.computed(aSource,{
+  return computed(aSource,{
     get(p) {
       let lastProxy = this.get('_last_'+p);
       let modelBefore = lastProxy && lastProxy.get('content');

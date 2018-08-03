@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import _ from 'lodash';
 import bf from 'ember-kojac/utils/BuzzFunctions';
 

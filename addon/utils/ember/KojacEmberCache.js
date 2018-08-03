@@ -1,4 +1,7 @@
-import Ember from 'ember';
+import EmberObject from '@ember/object';
+import { defineProperty } from '@ember/object';
+import { computed } from '@ember/object';
+
 import _ from 'lodash';
 import bf from 'ember-kojac/utils/BuzzFunctions';
 
@@ -7,7 +10,7 @@ import KojacUtils from 'ember-kojac/utils/KojacUtils';
 import KojacTypes from 'ember-kojac/utils/KojacTypes';
 import EmberFramework from 'ember-kojac/utils/ember/EmberFramework';
 
-let kec = Ember.Object.extend({
+let kec = EmberObject.extend({
 
   ensureDependencyObserver(key) {
     if (_.first(this.observersForKey(key),o=> o.method=='dependencyObserver'))
@@ -41,7 +44,7 @@ let kec = Ember.Object.extend({
   },
 
   setUnknownProperty(key, value) {
-    Ember.defineProperty(this,key,undefined,value);
+    defineProperty(this,key,undefined,value);
     this.ensureDependencyObserver(key);
     this.dependencyObserver(value,key);
     return true;
@@ -49,7 +52,7 @@ let kec = Ember.Object.extend({
 });
 
 kec.collectResource = function(aResource,aFilter=null) {
-  return Ember.computed(function(){
+  return computed(function(){
     let keys = Object.keys(this); //EmberFramework.instance().getPropertyNames(this);
     keys = _.filter(keys, (k) => bf.beginsWith(k, aResource + '__'));
     keys = keys.sort();

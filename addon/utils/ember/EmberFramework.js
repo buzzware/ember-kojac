@@ -1,11 +1,15 @@
 import Ember from 'ember';
+import EmberObject from '@ember/object';
+import ObjectProxy from '@ember/object/proxy';
+import { set,get,setProperties } from '@ember/object';
+
 import _ from 'lodash';
 import bf from 'ember-kojac/utils/BuzzFunctions';
 
 var ef = class {
 
 	constructor() {
-		this.defaultClass = Ember.Object;
+		this.defaultClass = EmberObject;
 	}
 
 	static instance() {
@@ -44,9 +48,9 @@ var ef = class {
     /*if (object instanceof DS.Model) {
       return getEmberDataProperties(object);
     } else*/
-    if (object instanceof Ember.ObjectProxy) {
+    if (object instanceof ObjectProxy) {
       result = this.getProxiedProperties(object);
-    } else if (object instanceof Ember.Object) {
+    } else if (object instanceof EmberObject) {
       result = this.getEmberObjectProperties(object);
     } else {
       result = this.getPojoProperties(object);
@@ -56,24 +60,24 @@ var ef = class {
   }
 
 	set(aObject,aProperty,aValue) {
-		return Ember.set(aObject,aProperty,aValue);
+		return set(aObject,aProperty,aValue);
 	}
 
 	setProperties(aObject,aPropertyValues) {
-		Ember.setProperties(aObject,aPropertyValues);
+		setProperties(aObject,aPropertyValues);
 	}
 
 	get(aObject,aProperty) {
-		return Ember.get(aObject,aProperty);
+		return get(aObject,aProperty);
 	}
 
 	cacheGet(aCache,aProperty) {
-		return Ember.get(aCache,aProperty);
+		return get(aCache,aProperty);
 	}
 
 	cacheSet(aCache,aProperty,aValue) {
 		aCache.beginPropertyChanges();
-		Ember.set(aCache,aProperty,aValue);
+		set(aCache,aProperty,aValue);
 		aCache.endPropertyChanges();
 		return aValue;
 	}

@@ -15,6 +15,20 @@ module.exports = {
     browser: true
   },
   rules: {
+    "no-console":0,
+    "no-unused-vars":0,
+    "quotes": 0,
+    "indent": 0,
+    "no-unreachable": 0,
+    "no-mixed-spaces-and-tabs": 0,
+    "func-names": 0,
+    "no-use-before-define": [2, "nofunc"],
+    "prefer-arrow-callback": 0,
+    "prefer-rest-params": 0,
+    "import/no-unresolved": 0,
+    "no-underscore-dangle": 0,
+    "no-empty": 0,
+    "no-case-declarations": 0
   },
   overrides: [
     // node files
@@ -29,7 +43,9 @@ module.exports = {
       excludedFiles: [
         'app/**',
         'addon/**',
-        'tests/dummy/app/**'
+        'tests/dummy/app/**',
+        'node_modules/**',
+        'tmp/**'
       ],
       parserOptions: {
         sourceType: 'script',
