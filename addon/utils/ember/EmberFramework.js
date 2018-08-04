@@ -2,6 +2,7 @@ import Ember from 'ember';
 import EmberObject from '@ember/object';
 import ObjectProxy from '@ember/object/proxy';
 import { set,get,setProperties } from '@ember/object';
+//import * as eo from '@ember/object';
 
 import _ from 'lodash';
 import bf from 'ember-kojac/utils/BuzzFunctions';
@@ -110,12 +111,25 @@ var ef = class {
 		return bf.isObjectStrict(aSomething) && aSomething.isDescriptor;
 	}
 
+	_descriptorFor(aObject,aKey,aMeta=null) {
+    var m = aMeta || Ember.meta(aObject);
+    return (m && m._parent && m._parent._descriptors && m._parent._descriptors[aKey]) || null;
+  }
+
+  _metaFor(aObject,aKey,aMeta=null) {
+    var d = this._descriptorFor(aObject, aKey, aMeta);
+    return (d && d._meta) || null;
+  }
+
+  isProperty(aObject,aKey) {
+	  return !!this._descriptorFor(aObject,aKey);
+  }
+
 	getPropertyNames(aObject) {
 		var keys = ef.getPropertyNames(aObject);
 		var result = [];
 		for (let k of keys) {
-			var v = aObject[k];
-			if (!this.isDescriptor(v))
+			if (!this.isProperty(aObject,k))
 				continue;
 			result.push(k);
 		}
@@ -126,8 +140,7 @@ var ef = class {
     var keys = ef.getPropertyNames(aObject);
 		var result = {};
 		for (let k of keys) {
-			var v = aObject[k];
-			if (this.isDescriptor(v))
+			if (this.isProperty(aObject,k))
 				result[k] = aObject.get(k);
 		}
 		return result;
@@ -137,14 +150,12 @@ var ef = class {
     var keys = ef.getPropertyNames(aObject);
 		var result = [];
 		var m;
+    if (!(m = Ember.meta(aObject)))
+      return result;
 		for (let k of keys) {
-			var v = aObject[k];
-			if (!this.isDescriptor(v))
-				continue;
-			if (!(m = v.meta()))
-				continue;
-			if (!m.kemp)
-				continue;
+		  var pm = this._metaFor(aObject,k,m);
+		  if (!pm || !pm.managedModel)
+        continue;
 			result.push(k);
 		}
 		return result;

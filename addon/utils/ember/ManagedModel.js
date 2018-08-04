@@ -1,9 +1,11 @@
 import Kojac from 'ember-kojac/utils/Kojac';
 import KojacTypes from 'ember-kojac/utils/KojacTypes';
 import KojacObject from 'ember-kojac/utils/KojacObject';
+import KojacUtils from 'ember-kojac/utils/KojacUtils';
+import EmberFramework from 'ember-kojac/utils/ember/EmberFramework';
 
 import Ember from 'ember';
-import { computed } from '@ember/object';
+import { computed, get, set } from '@ember/object';
 import EmberObject from '@ember/object';
 
 var ManagedModel = EmberObject.extend({
@@ -43,6 +45,33 @@ var ManagedModel = EmberObject.extend({
       this.__writeLock();
     }
   },
+
+
+  // copy the property from source to dest
+  // this could be a static fn
+  toJsonoCopyFn: function(aDest,aSource,aProperty,aOptions) {
+    aDest[aProperty] = KojacUtils.toJsono(get(aSource,aProperty),aOptions);
+  },
+
+  // return array of names, or an object and all keys will be used
+  // this could be a static fn
+  toPropListFn: function(aSource,aOptions) {
+    var p;
+    if ((p = aSource) && aSource.constructor && aSource.constructor.proto && aSource.constructor.proto()) {
+      return EmberFramework.instance().getModelPropertyNames(aSource);
+    } else {
+      return aSource;
+    }
+  },
+
+  toJsono: function(aOptions) {
+    return KojacUtils.toJsono(this,aOptions,this.toPropListFn,this.toJsonoCopyFn)
+  },
+
+  getProperties() {
+    return this.toJsono();
+  },
+
 });
 
 var field = function(aType) {
