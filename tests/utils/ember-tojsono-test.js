@@ -25,8 +25,8 @@ describe("ManagedModel toJsono", function() {
 	var Product = ManagedModel.extend(productProperties);
 
 	var Summer = ManagedModel.extend({
-		a: KojacTypes.Int,
-		b: KojacTypes.Int,
+		a: field(KojacTypes.Int),
+		b: field(KojacTypes.Int),
 		sum: computed('a','b',function() {
 			return this.get('a') + this.get('b');
 		})
@@ -77,17 +77,17 @@ describe("ManagedModel toJsono", function() {
 		expect(actual).to.eql(expected);
 	});
 
-	// it("simple model with embedded object", function() {
-	// 	var input = Product.create(productValues1);
-	// 	input.set('embedded',values2);
-	//
-	// 	var actual = KojacUtils.toJsono(input);
-	//
-	// 	var expected = _.clone(productValues1);
-	// 	expected.embedded = values2;
-	//
-	// 	expect(actual).to.eql(expected);
-	// });
+	it("simple model with embedded object", function() {
+		var input = Product.create(productValues1);
+		input.set('embedded',values2);
+
+		var actual = KojacUtils.toJsono(input);
+
+		var expected = _.clone(productValues1);
+		expected.embedded = values2;
+
+		expect(actual).to.eql(expected);
+	});
 
 	it("simple model", function() {
 		var product1 = Product.create(productValues1);
@@ -108,7 +108,7 @@ describe("ManagedModel toJsono", function() {
 
 	it("date serialization", function() {
 		var Product = ManagedModel.extend({
-			dob: Date
+			dob: field(Date)
 		});
 		var product = Product.create({dob: new Date(2011,0,1)});
 		var jsono = KojacUtils.toJsono(product);
