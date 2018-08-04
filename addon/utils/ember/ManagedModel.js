@@ -62,7 +62,7 @@ var field = function(aType) {
   };
   prop = prop.meta({
     managedModel: true,
-    //type: destType
+    type: aType
   });
   return prop;
 };

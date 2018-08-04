@@ -2,7 +2,6 @@ import {afterEach, beforeEach, describe, it} from 'mocha';
 import {assert,expect,should} from 'chai';
 should();
 
-import Ember from 'ember';
 import { computed } from '@ember/object';
 import EmberObject from '@ember/object';
 
@@ -11,24 +10,15 @@ import KojacTypes from 'ember-kojac/utils/KojacTypes';
 import KojacObjectFactory from 'ember-kojac/utils/KojacObjectFactory';
 import EmberFramework from 'ember-kojac/utils/ember/EmberFramework';
 
-import ManagedModel from 'ember-kojac/utils/ember/ManagedModel';
-import { field } from 'ember-kojac/utils/ember/ManagedModel';
+import ManagedModel, { field } from 'ember-kojac/utils/ember/ManagedModel';
 
 var Person = ManagedModel.extend({
-
   first_name: field(String),
   last_name:  field(String),
   //age: field(KojacTypes.Int),
 
   full_name: computed('first_name','last_name',function(){ return `${this.first_name} ${this.last_name}`;})
-
 });
-
-// var Person = EmberObject.extend({
-//   //first_name: null,
-//   //last_name: null
-//   full_name: computed('first_name','last_name',function(){ return `${this.first_name} ${this.last_name}`;})
-// });
 
 describe("Managed Model", function() {
 
