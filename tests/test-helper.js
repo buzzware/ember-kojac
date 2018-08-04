@@ -1,7 +1,7 @@
-import resolver from './helpers/resolver';
-import { setResolver } from 'ember-mocha';
-
-setResolver(resolver);
+// import resolver from './helpers/resolver';
+// import { setResolver } from 'ember-mocha';
+//
+// setResolver(resolver);
 
 import Application from '../app';
 import config from '../config/environment';
