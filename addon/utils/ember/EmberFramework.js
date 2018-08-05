@@ -165,14 +165,12 @@ var ef = class {
     var keys = ef.getPropertyNames(aObject);
 		var result = {};
 		var m;
+    if (!(m = Ember.meta(aObject)))
+      return result;
 		for (let k of keys) {
-			var v = aObject[k];
-			if (!this.isDescriptor(v))
-				continue;
-			if (!(m = v.meta()))
-				continue;
-			if (!m.kemp)
-				continue;
+      var pm = this._metaFor(aObject,k,m);
+      if (!pm || !pm.managedModel)
+        continue;
 			result[k] = aObject.get(k);
 		}
 		return result;
