@@ -171,7 +171,7 @@ export default class {
 	}
 
 	// returns KojacResponse
-	async request() {
+	request() {
 		return this.kojac.performRequest(this);
 	}
 

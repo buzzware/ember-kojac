@@ -1,6 +1,7 @@
 'use strict';
 
 const EmberAddon = require('ember-cli/lib/broccoli/ember-addon');
+var Funnel = require('broccoli-funnel');
 
 module.exports = function(defaults) {
   let app = new EmberAddon(defaults, {
@@ -14,5 +15,13 @@ module.exports = function(defaults) {
     behave. You most likely want to be modifying `./index.js` or app's build file
   */
 
-  return app.toTree();
+  // This is for the bower version. Convert to use "npm install simplestorage.js"
+  //app.import('bower_components/simpleStorage/simpleStorage.js');
+  //app.import('vendor/shims/simple-storage.js');
+
+  var mockjson = new Funnel('tests/public/mockjson', {
+    destDir: '/assets/mockjson'
+  });
+
+  return app.toTree(mockjson);
 };
