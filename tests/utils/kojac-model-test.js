@@ -36,7 +36,7 @@ describe("Kojac Model", function() {
 		expect(testModel instanceof KojacObject).to.be.true;
 		expect(testModel.name).to.be.null;
 		expect(testModel.count).to.equal(8);
-		expect(testModel.toJSON).to.be.defined;
+		expect(testModel.toJSON).to.not.be.undefined;
 	});
 
 	it("extend with override and additional attribute", function() {

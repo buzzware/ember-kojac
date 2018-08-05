@@ -46,28 +46,28 @@ describe("Kojac Mock", function() {
 		var op;
 
 		var req =	App.kojac.read(['order_item','product','order_item__50']);
-		expect(req.ops).to.be.defined;
-		expect(req.options).to.be.defined;
+		expect(req.ops).to.not.be.undefined;
+		expect(req.options).to.not.be.undefined;
 		expect(req.ops.length).to.equal(3);
 		op = req.ops[0];
 		expect(op.verb).to.equal('READ');
 		expect(op.key).to.equal('order_item');
 		expect(op.result_key).to.equal(op.key);
-		expect(op.results).to.not.be.defined;
+		expect(op.results).to.be.undefined;
 
 		op = req.ops[1];
 		expect(op.verb).to.equal('READ');
 		expect(op.key).to.equal('product');
 		expect(op.result_key).to.equal(op.key);
-		expect(op.results).to.not.be.defined;
+		expect(op.results).to.be.undefined;
 		op = req.ops[2];
 		expect(op.verb).to.equal('READ');
 		expect(op.key).to.equal('order_item__50');
 		expect(op.result_key).to.equal(op.key);
-		expect(op.results).to.not.be.defined;
+		expect(op.results).to.be.undefined;
 
 		var response = await req.request();
-		expect(response.ops).to.be.defined;
+		expect(response.ops).to.not.be.undefined;
 		var i = 0;
 		op = response.ops[i];
 		expect(op.result_key).to.equal('order_item');
@@ -94,9 +94,9 @@ describe("Kojac Mock", function() {
 		expect(op.results.order_item__50.memberTypeId).to.equal("CDB");
 		expect(op.results.order_item__50.drawings).to.equal(1234.50);
 
-		expect(App.cache.order_item__49).to.be.defined;
+		expect(App.cache.order_item__49).to.not.be.undefined;
 		expect(App.cache.order_item__49).to.equal(response.ops[0].results.order_item__49);
-		expect(App.cache.product__3).to.be.defined;
+		expect(App.cache.product__3).to.not.be.undefined;
 		expect(App.cache.product__3).to.equal(response.ops[1].results.product__3);
 	});
 
@@ -114,8 +114,8 @@ describe("Kojac Mock", function() {
 
 		req = App.kojac.create({order_item:{name: 'Fred'}});
 
-		expect(req.ops).to.be.defined;
-		expect(req.options).to.be.defined;
+		expect(req.ops).to.not.be.undefined;
+		expect(req.options).to.not.be.undefined;
 		expect(req.ops.length).to.equal(1);
 		op = req.ops[0];
 		expect(op.verb).to.equal('CREATE');
@@ -124,7 +124,7 @@ describe("Kojac Mock", function() {
 		expect(op.results).to.be.undefined;
 
 		var response = await req.request();
-		expect(response.ops).to.be.defined;
+		expect(response.ops).to.not.be.undefined;
 		var i = 0;
 		op = response.ops[i];
 		expect(op.result_key).to.equal('order_item__54');
@@ -133,7 +133,7 @@ describe("Kojac Mock", function() {
 		expect(op.results.order_item__54.constructor).to.equal(OrderItem);
 		expect(op.results.order_item__54.name).to.equal("Fred");
 
-		expect(App.cache.order_item__54).to.be.defined;
+		expect(App.cache.order_item__54).to.not.be.undefined;
 		expect(App.cache.order_item__54).to.equal(op.results.order_item__54);
 	});
 
@@ -151,8 +151,8 @@ describe("Kojac Mock", function() {
 		};
 
 		req = App.kojac.update({order_item__54: {name: 'John'}});
-		expect(req.ops).to.be.defined;
-		expect(req.options).to.be.defined;
+		expect(req.ops).to.not.be.undefined;
+		expect(req.options).to.not.be.undefined;
 		expect(req.ops.length).to.equal(1);
 		op = req.ops[0];
 		expect(op.verb).to.equal('UPDATE');
@@ -163,7 +163,7 @@ describe("Kojac Mock", function() {
 
 		var response = await req.request();
 
-		expect(response.ops).to.be.defined;
+		expect(response.ops).to.not.be.undefined;
 		var i = 0;
 		op = response.ops[i];
 		expect(op.result_key).to.equal(req.ops[i].key);
@@ -172,7 +172,7 @@ describe("Kojac Mock", function() {
 		expect(op.results.order_item__54.constructor).to.equal(OrderItem);
 		expect(op.results.order_item__54.name).to.eql("John");
 
-		expect(App.cache.order_item__54).to.be.defined;
+		expect(App.cache.order_item__54).to.not.be.undefined;
 		expect(App.cache.order_item__54).to.equal(op.results.order_item__54);
 	});
 
@@ -192,8 +192,8 @@ describe("Kojac Mock", function() {
 		};
 
 		req = App.kojac.destroy(['order_item__54']);
-		expect(req.ops).to.be.defined;
-		expect(req.options).to.be.defined;
+		expect(req.ops).to.not.be.undefined;
+		expect(req.options).to.not.be.undefined;
 		expect(req.ops.length).to.equal(1);
 		var i = 0;
 		op = req.ops[i];
@@ -205,7 +205,7 @@ describe("Kojac Mock", function() {
 
 		var response = await req.request();
 
-		expect(response.ops).to.be.defined;
+		expect(response.ops).to.not.be.undefined;
 		op = response.ops[i];
 		expect(op.result_key).to.equal(req.ops[i].key);
 		expect(op.results).to.be.a('object');
@@ -228,8 +228,8 @@ describe("Kojac Mock", function() {
 		};
 
 		req = App.kojac.execute('results',{a: 1,b:2});
-		expect(req.ops).to.be.defined;
-		expect(req.options).to.be.defined;
+		expect(req.ops).to.not.be.undefined;
+		expect(req.options).to.not.be.undefined;
 		expect(req.ops.length).to.equal(1);
 		var i = 0;
 		op = req.ops[i];
@@ -241,7 +241,7 @@ describe("Kojac Mock", function() {
 
 		var response = await req.request();
 
-		expect(response.ops).to.be.defined;
+		expect(response.ops).to.not.be.undefined;
 		op = response.ops[i];
 		expect(op.result_key).to.equal(req.ops[i].key);
 		expect(op.results).to.be.a('object');

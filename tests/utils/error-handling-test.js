@@ -64,7 +64,7 @@ describe("Error Handling (requires web server)", function() {
 		}
 		expect(response instanceof NotFound).to.be.true;
 		var ajaxError = response.data;
-		expect(ajaxError).to.be.defined;
+		expect(ajaxError).to.not.be.undefined;
 		expect(ajaxError.http_code).to.equal(404);
 		expect(response.status).to.equal(404);
 		expect(ajaxError.kind).to.equal('NotFound');
@@ -99,7 +99,7 @@ describe("Error Handling (requires web server)", function() {
 		};
 		var response = await App.kojac.execute(['calc']).request();
 		var op = response.ops && response.ops[0];
-		expect(op.error).to.be.defined;
+		expect(op.error).to.not.be.undefined;
 		expect(op.results).to.be.null;
 		expect(op.error).to.eql(
 			{

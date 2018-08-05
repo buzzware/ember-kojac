@@ -16,8 +16,8 @@ module.exports = function(defaults) {
   */
 
   // This is for the bower version. Convert to use "npm install simplestorage.js"
-  //app.import('bower_components/simpleStorage/simpleStorage.js');
-  //app.import('vendor/shims/simple-storage.js');
+  app.import('node_modules/simpleStorage.js/simpleStorage.js');
+  app.import('vendor/shims/simple-storage.js');
 
   var mockjson = new Funnel('tests/public/mockjson', {
     destDir: '/assets/mockjson'

@@ -111,7 +111,7 @@ describe("KojacObject", function() {
 		var op3 = new Op({anObject: instanceObject});
 		expect(op3.anObject).to.equal(instanceObject);
 
-		expect(op3.toJSON).to.be.defined;
+		expect(op3.toJSON).to.not.be.undefined;
 	});
 
 	it("KojacObject should not clone objects or arrays when used as instance values", function(){
@@ -125,7 +125,7 @@ describe("KojacObject", function() {
 		expect(op.aNumber).to.equal(5);
 		expect(op.anObject).to.equal(anObject);
 		expect(op.anArray).to.equal(anArray);
-		expect(op.toJSON).to.be.defined;
+		expect(op.toJSON).to.not.be.undefined;
 	});
 
 	it("create base class and object", function() {
