@@ -11,7 +11,6 @@ import OpResponse from 'ember-kojac/utils/OpResponse';
 import DummyRemoteProvider from 'ember-kojac/utils/DummyRemoteProvider';
 
 import EmberFramework from 'ember-kojac/utils/ember/EmberFramework';
-import KojacEmberModel from 'ember-kojac/utils/ember/KojacEmberModel';
 
 import StandardException from 'ember-kojac/utils/standard_exceptions/StandardExceptions';
 import * as SE from 'ember-kojac/utils/standard_exceptions/StandardExceptions';

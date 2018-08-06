@@ -11,7 +11,6 @@ import KojacRemoteProvider from 'ember-kojac/utils/KojacRemoteProvider';
 
 
 import EmberFramework from 'ember-kojac/utils/ember/EmberFramework';
-import KojacEmberModel from 'ember-kojac/utils/ember/KojacEmberModel';
 
 import StandardException from 'ember-kojac/utils/standard_exceptions/StandardExceptions';
 //import {declareException} from 'ember-kojac/utils/standard_exceptions/StandardExceptions';
