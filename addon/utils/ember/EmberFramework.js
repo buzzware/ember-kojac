@@ -125,27 +125,23 @@ var ef = class {
 	  return !!this._descriptorFor(aObject,aKey);
   }
 
+  // names of all public properties of an object
 	getPropertyNames(aObject) {
 		var keys = ef.getPropertyNames(aObject);
-		var result = [];
-		for (let k of keys) {
-			if (!this.isProperty(aObject,k))
-				continue;
-			result.push(k);
-		}
-		return result;
+    return keys;
 	}
 
+  // names and values of all public properties of an object
 	getProperties(aObject) {
     var keys = ef.getPropertyNames(aObject);
 		var result = {};
 		for (let k of keys) {
-			if (this.isProperty(aObject,k))
-				result[k] = aObject.get(k);
+		  result[k] = aObject.get(k);
 		}
 		return result;
 	}
 
+	// names of defined fields of models
 	getModelPropertyNames(aObject) {
     var keys = ef.getPropertyNames(aObject);
 		var result = [];
@@ -161,6 +157,7 @@ var ef = class {
 		return result;
 	}
 
+  // names and values of defined fields of models
 	getModelProperties(aObject) {
     var keys = ef.getPropertyNames(aObject);
 		var result = {};
