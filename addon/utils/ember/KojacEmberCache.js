@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import EmberObject from '@ember/object';
 import { defineProperty } from '@ember/object';
 import { computed } from '@ember/object';
