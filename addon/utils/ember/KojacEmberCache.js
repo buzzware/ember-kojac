@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import EmberObject from '@ember/object';
 import { defineProperty } from '@ember/object';
-import { computed } from '@ember/object';
+import { readOnly,alias } from '@ember/object/computed';
 
 import _ from 'lodash';
 import bf from 'ember-kojac/utils/BuzzFunctions';
@@ -10,6 +10,16 @@ import Kojac from 'ember-kojac/utils/Kojac';
 import KojacUtils from 'ember-kojac/utils/KojacUtils';
 import KojacTypes from 'ember-kojac/utils/KojacTypes';
 import EmberFramework from 'ember-kojac/utils/ember/EmberFramework';
+
+// import createClassComputed from 'ember-macro-helpers/create-class-computed';
+//import { computed } from '@ember/object';
+//import computed from 'ember-macro-helpers/computed';
+
+//import createClassComputed from 'ember-macro-helpers';
+
+//import { computed,createClassComputed } from 'ember-macro-helpers';
+import { createClassComputed } from 'ember-macro-helpers';
+import { computed } from '@ember/object';
 
 //import changeEvent from './change_event'; // or use '<key>:change'
 
@@ -114,5 +124,56 @@ kec.collectResource = function(aResource,aFilter=null) {
     return result;
   }).meta({notifyChanges: {resource: aResource,filter: aFilter}});
 };
+
+// createClassComputed(
+//   // the first param is the observer list
+//   // it refers to incoming keys
+//   // the bool is whether a value change should recreate the macro
+//   [
+//     // the array key
+//     false,
+//
+//     // the array property is dynamic, and is responsible for the macro being rewritten
+//     true,
+//
+//     // any static properties after the last dynamic property are optional
+//     // you could leave this off if you want
+//     false
+//   ],
+//   // the second param is the callback function where you create your computed property
+//   // it is passed in the values of the properties you marked true above
+//   (array, key, value) => {
+//     // when `key` changes, we need to watch a new property on the array
+//     // since our computed property is now invalid, we need to create a new one
+//     return computed(`${array}.@each.${key}`, value, (array, value) => {
+//       return array.filterBy(key, value);
+//     });
+//   }
+// );
+
+// export default createClassComputed(
+//   [false, true],
+//   (obj, key) => readOnly(`${obj}.${key}`)
+// );
+
+
+kec.lookupId = createClassComputed(
+  [false, true],
+  (aResource, aId) => {
+    if (aId===null || aId===undefined)
+      return;
+
+    //aResource = aResource.substring(8);
+    if (Array.isArray(aId)) {
+      var keys = aId.map(id => `${aResource}__${id}`);
+      return computed(...keys, function () {
+        var result = keys.map(k => this.get(k));
+        return result;
+      });
+    } else {
+      return readOnly(`${aResource}__${aId}`);//,(aTargetValue, aId)=>{
+    }
+  }
+);
 
 export default kec;
