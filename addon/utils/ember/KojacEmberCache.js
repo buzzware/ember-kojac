@@ -58,7 +58,7 @@ let kec = EmberObject.extend({
   },
 
   ensureDependencyObserver(key) {
-    console.log('ensureDependencyObserver disabled');
+    //console.log('ensureDependencyObserver disabled');
     // need to update this, probably using Ember.meta(this)._listeners or Ember.meta(this)._parent._listeners
     // see https://github.com/emberjs/ember.js/blob/6fc89cdf13124d88b8ae6adf99bb02a8c0cdf508/packages/ember-metal/lib/events.ts
     if (_.first(this.observersForKey(key),o=> o.method=='dependencyObserver'))
@@ -87,7 +87,7 @@ let kec = EmberObject.extend({
         return false;
       if  (!nc.resource || res!=nc.resource)
         return false;
-      return !nc.filter || !!nc.filter(this.get(k));
+      return !nc.filter || !!nc.filter(me.get(k));
     });
     for (var k of keys)
       this.notifyPropertyChange(k);
