@@ -67,17 +67,21 @@ export default class extends KojacStoreBase {
     parts = KojacUtils.keySplit(aRequestOp.key);
     if (parts[1]) { // item
       value = simpleStorage.get(aRequestOp.key, Boolean);
-      result_key = (aRequestOp.result_key || aRequestOp.key);
+      //result_key = (aRequestOp.result_key || aRequestOp.key);
       if (value === Boolean)
         value = undefined;
-      results[result_key] = value;
+      //results[result_key] = value;
+      // response = new OpResponse({
+      //   results: results,
+      //   result_key: result_key
+      // });
       response = new OpResponse({
-        results: results,
-        result_key: result_key
+        //results: results,
+        result_value: value
       });
     } else {  // collection
       var keys = simpleStorage.index();
-      result_key = aRequestOp.result_key || null;
+      //result_key = aRequestOp.result_key || null;
       var ids = [];
       _.each(keys, function (k) {
         parts = KojacUtils.keySplit(k);
@@ -90,19 +94,18 @@ export default class extends KojacStoreBase {
           value = undefined;
         results[k] = v;
       });
-      if (result_key) {
-        results[result_key] = ids;
+      // if (result_key) {
+      //   results[result_key] = ids;
+      //   response = new OpResponse({
+      //     results: results,
+      //     result_key: result_key
+      //   });
+      // } else {
         response = new OpResponse({
           results: results,
-          result_key: result_key
-        });
-      } else {
-        response = new OpResponse({
-          results: results,
-          result_key: null,
           result_value: ids
         });
-      }
+      // }
     }
     return response;
   }
