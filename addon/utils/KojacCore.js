@@ -150,6 +150,8 @@ export default class {
 							}
 						}
 						results[key] = value;
+						if (response_op.result_key && response_op.result_key==key)
+						  response_op.result_value = value;
 						if (request_op.options.cacheResults !== false)
 							this.framework.cacheSet(this.cache, key, value);
 					}
@@ -249,6 +251,16 @@ export default class {
 				if (response.performed(i))
 					continue;
         let op_response = await this.remoteProvider.handleRequestOp(request_op);
+        if (!op_response.error) {
+          if (request_op.result_key && !op_response.result_key)
+            op_response.result_key = request_op.result_key;
+          if (!op_response.error && !op_response.results)
+            op_response.results = {};
+          if (!op_response.result_value && op_response.result_key && op_response.results[op_response.result_key])
+            op_response.result_value = op_response.results[op_response.result_key] || null;
+          if (op_response.result_value && op_response.result_key && !op_response.results[op_response.result_key])
+            op_response.results[op_response.result_key] = op_response.result_value;
+        }
         op_response.index = i;
         op_response.response = response;
 				response.ops[i] = op_response;
@@ -280,9 +292,9 @@ export default class {
 		return this.newRequest({chaining: true});
 	}
 
-	create(aKeyValues,aOptions) {
+	create(...args) {
 		var req = this.newRequest();
-		return req.create(aKeyValues,aOptions);
+		return req.create(...args);
 	}
 
 	read(aKeys,aOptions) {
@@ -310,8 +322,8 @@ export default class {
 		return req.execute(aKey,aValue,aOptions);
 	}
 
-	collectIds(aPrefix,aIds,aFilterFn) {
-		if (!aIds)
+	collectIds(aPrefix,aIds,aFilterFn,aCount) {
+		if (!aIds || aCount===0)
 			return [];
 		var result = [];
 		var item;
@@ -320,6 +332,8 @@ export default class {
 			item = this.framework.cacheGet(this.cache,aPrefix+'__'+aIds[i]);
 			if (!aFilterFn || aFilterFn(item))
 				result.push(item);
+			if (aCount && (i+1>=aCount))
+			  break;
 		}
 		return result;
 	}

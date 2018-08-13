@@ -52,13 +52,13 @@ describe("Kojac Mock", function() {
 		op = req.ops[0];
 		expect(op.verb).to.equal('READ');
 		expect(op.key).to.equal('order_item');
-		expect(op.result_key).to.equal(op.key);
+		expect(op.result_key).to.equal(null);
 		expect(op.results).to.be.undefined;
 
 		op = req.ops[1];
 		expect(op.verb).to.equal('READ');
 		expect(op.key).to.equal('product');
-		expect(op.result_key).to.equal(op.key);
+		expect(op.result_key).to.equal(null);
 		expect(op.results).to.be.undefined;
 		op = req.ops[2];
 		expect(op.verb).to.equal('READ');
@@ -70,18 +70,19 @@ describe("Kojac Mock", function() {
 		expect(response.ops).to.not.be.undefined;
 		var i = 0;
 		op = response.ops[i];
-		expect(op.result_key).to.equal('order_item');
+    expect(op.result_key).to.equal(null);
+    expect(op.result()).to.eql([49,50,51]);
 		expect(op.results).to.be.a('object');
-		expect(op.results.order_item).to.eql([49,50,51]);
+		//expect(op.results.order_item).to.eql([49,50,51]);
 		expect(op.results.order_item__49.constructor).to.equal(OrderItem);
 		expect(op.results.order_item__49.id).to.equal(49);
 		expect(op.results.order_item__49.accountRef).to.equal("000049X");
 		expect(op.results.order_item__49.productId).to.equal(3);
 
 		op = response.ops[++i];
-		expect(op.result_key).to.equal('product');
+		expect(op.result_key).to.equal(null);
+    expect(op.result()).to.eql([3,4,5]);
 		expect(op.results).to.be.a('object');
-		expect(op.results.product).to.eql([3,4,5]);
 		expect(op.results.product__3.constructor).to.equal(Product);
 		expect(op.results.product__3.name).to.equal("Product 3");
 		expect(op.results.product__3.provider).to.equal("AJAX Pty Ltd");

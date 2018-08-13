@@ -15,6 +15,7 @@ export default class {
 			//verb: null,
 			//key: null,
 			//value: undefined,
+      result_value: null,
 			results: null,
 			result_key: null,
 			//result: undefined,
@@ -24,7 +25,7 @@ export default class {
 	}
 
 	result() {
-	  return this.results && this.result_key && this.results[this.result_key];
+	  return this.result_value || (this.results && this.result_key && this.results[this.result_key]);
   }
 
 }

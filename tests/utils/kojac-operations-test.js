@@ -38,15 +38,12 @@ describe("Kojac Operations", function() {
 			objectFactory: factory
 		});
 		this.kojac.remoteProvider.mockReadOperationHandler = function(aRequestOp) {
-			return new OpResponse({
-				result_key: aRequestOp.result_key || aRequestOp.key,
-				results: {
-					order_item__50: {
-						id: 50,
-						description: 'pencils',
-						qty: 2
-					}
-				}
+		  return new OpResponse({
+        result_value: {
+          id: 50,
+          description: 'pencils',
+          qty: 2
+        }
 			});
 		};
 	});

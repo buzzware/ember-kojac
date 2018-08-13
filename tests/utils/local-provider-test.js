@@ -98,10 +98,10 @@ describe("LocalStorageRemoteProvider", function() {
     req = response.request;
 
     op = response.ops[0];
-    expect(op.result_key).to.equal('waiters');
+    expect(op.result_key).to.equal(null);
     expect(op.result() instanceof Array).to.be.true;
     expect(op.result().length).to.equal(1);
-    expect(_.keys(op.results).length).to.equal(2);
+    expect(_.keys(op.results).length).to.equal(1);
     var id = op.result()[0];
     var key = KojacUtils.keyJoin('waiters',id);
     var waiter = op.results[key];

@@ -96,7 +96,7 @@ describe("Error Handling (requires web server)", function() {
 				}
 			});
 		};
-		var response = await App.kojac.execute(['calc']).request();
+		var response = await App.kojac.execute('calc').request();
 		var op = response.ops && response.ops[0];
 		expect(op.error).to.not.be.undefined;
 		expect(op.results).to.be.null;

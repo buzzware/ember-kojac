@@ -43,9 +43,19 @@ export default class {
 
 	// {key: value} or [{key1: value},{key2: value}] or {key1: value, key2: value}
 	// Can give existing keys with id, and will create a clone in database with a new id
-	create(aKeyValues,aOptions) {
+	create(aResource,aKeyValues,aOptions) {
 
-		var result_key = (aOptions && bf.removeKey(aOptions,'result_key'));
+    if (typeof(aResource) == 'string') {
+      var keyValues = {};
+      keyValues[aResource] = aKeyValues;
+      aKeyValues = keyValues;
+    } else {
+      aOptions = aKeyValues;
+      aKeyValues = aResource;
+      aResource = undefined;
+    }
+
+    var result_key = (aOptions && bf.removeKey(aOptions,'result_key'));
 		var params = (aOptions && bf.removeKey(aOptions,'params'));  // extract specific params
 		var options = _.extend({cacheResults: true, manufacture: true},aOptions || {});
 
@@ -81,15 +91,17 @@ export default class {
 		var options = _.extend({cacheResults: true, manufacture: true},aOptions || {});
 		var i = 0;
 		for (let k of keys) {
+		  var isItem = !!k.split('__')[1];
+
 			var op = this.newOperation();
 			op.options = _.clone(options);
 			op.params = (params && _.clone(params));
 			op.verb = 'READ';
 			op.key = k;
-			if (i===0)
-				op.result_key = result_key || k;
+			if (i===0 && result_key)
+				op.result_key = result_key;
 			else
-				op.result_key = k;
+        op.result_key = isItem ? k : null;
 			i += 1;
 		}
 		if (this.chaining)
@@ -112,16 +124,16 @@ export default class {
 		for (var i=0;i<kvArray.length-1;i+=2) {
 			var k = kvArray[i];
 			var v = kvArray[i+1];
+      var isItem = !!k.split('__')[1];
 			var op = this.newOperation();
 			op.verb = 'UPDATE';
 			op.options = _.clone(options);
 			op.params = (params && _.clone(params));
 			op.key = k;
-			if (first) {
-				op.result_key = result_key || k;
-				first = false;
-			} else
-				op.result_key = k;
+      if (i===0 && result_key)
+        op.result_key = result_key;
+      else
+        op.result_key = isItem ? k : null;
 			op.value = KojacUtils.toJsono(v,op.options);
 		}
 		if (this.chaining)
@@ -137,15 +149,16 @@ export default class {
 		var params = (aOptions && bf.removeKey(aOptions,'params'));  // extract specific params
 		var i = 0;
 		for (let k of keys) {
-			var op = this.newOperation();
+      var isItem = !!k.split('__')[1];
+      var op = this.newOperation();
 			op.options = _.clone(options);
 			op.params = (params && _.clone(params));
 			op.verb = 'DESTROY';
 			op.key = k;
-			if (i===0)
-				op.result_key = result_key || k;
-			else
-				op.result_key = k;
+      if (i===0 && result_key)
+        op.result_key = result_key;
+      else
+        op.result_key = isItem ? k : null;
 			i += 1;
 		}
 		if (this.chaining)
@@ -182,14 +195,19 @@ export default class {
 	}
 
 	// returns result of the first operation, collected from the cache if it is an array of ids or keys
-	async collect() {
+	async collect(aCount) {
     let response = await this.kojac.performRequest(this);
 		let result = response.result();
 		if (!_.isArray(result) || result.length===0)
 			return result;
 		var resource = response.request.ops[0].key;
-		return this.kojac.collectIds(resource,result);
+		return this.kojac.collectIds(resource,result,null,aCount);
 	}
+
+  // returns result of the first operation, collected from the cache if it is an array of ids or keys
+  collectFirst() {
+	  return this.collect(1).then((items) => items.length>0 ? items[0] : null);
+  }
 
 	// returns the merged results of all operations. For collections, this would be an array of ids or keys
 	async results() {

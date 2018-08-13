@@ -62,14 +62,18 @@ export default class extends KojacStoreBase {
 								if (!op_response.results)
 									op_response.results = {};
 								for (let k in data.results) {
-									if ((k===request_op.key) && (request_op.result_key!=request_op.key))
-										op_response.results[request_op.result_key] = data.results[k];
-									else
+									if ((k===request_op.key) && (request_op.result_key!=request_op.key)) {
+                    if (request_op.result_key)
+                      op_response.results[request_op.result_key] = data.results[k];
+                    else
+                      op_response.result_value = data.results[k];
+                  } else
 										op_response.results[k] = data.results[k];
 								}
 								break;
 							case 'result_key':
-								op_response.result_key = data[p];
+							  if (request_op.result_key)
+								  op_response.result_key = data[p];
 								break;
 							case 'error':
 								op_response.error = this.handleDataError(data[p]);
