@@ -53,11 +53,12 @@ export default class extends KojacStoreBase {
     else
       value = aRequestOp.value;
     simpleStorage.set(aRequestOp.key, value);
-    results = {};
-    results[result_key] = value;
+    // results = {};
+    // results[result_key] = value;
     return new OpResponse({
-      result_key: result_key,
-      results: results
+      result_value: value
+      // result_key: result_key,
+      // results: results
     });
   }
 
@@ -120,11 +121,12 @@ export default class extends KojacStoreBase {
     simpleStorage.set(key, value);
 
     var result_key = (aRequestOp.result_key || key);
-    var results = {};
-    results[result_key] = value;
+    // var results = {};
+    // results[result_key] = value;
     return new OpResponse({
       result_key: result_key,
-      results: results
+      result_value: value
+      //results: results
     });
   }
 
