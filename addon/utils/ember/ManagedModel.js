@@ -1,12 +1,12 @@
-import Kojac from 'ember-kojac/utils/Kojac';
-import KojacTypes from 'ember-kojac/utils/KojacTypes';
-import KojacObject from 'ember-kojac/utils/KojacObject';
+// import Kojac from 'ember-kojac/utils/Kojac';
+// import KojacTypes from 'ember-kojac/utils/KojacTypes';
+// import KojacObject from 'ember-kojac/utils/KojacObject';
 import KojacUtils from 'ember-kojac/utils/KojacUtils';
 import EmberFramework from 'ember-kojac/utils/ember/EmberFramework';
 
-import Ember from 'ember';
-import { computed, get, set } from '@ember/object';
 import EmberObject from '@ember/object';
+import { computed, get, set } from '@ember/object';
+import { cacheFor } from '@ember/object/internals';
 
 var ManagedModel = EmberObject.extend({
 
@@ -76,19 +76,18 @@ var ManagedModel = EmberObject.extend({
 
 var field = function(aType) {
   var prop = computed({
-    get: function () {
-      throw new Error("Should never get here");
+    get: function (aKey) {
+      var result = cacheFor(this,aKey);
+      if (result===undefined)
+        result = null;
+      return result;
     },
-    set: function () {
-      throw new Error("Should never get here");
+    set: function (aKey,aValue) {
+      if (this.__writeLocked())
+        throw new Error(`This ManagedModel is locked and ${aKey} cannot be changed to ${aValue}`);
+      return aValue;
     },
   });
-  prop._getter = prop.get;
-  prop._setter = function (aKey, aValue, aCachedValue) {
-    if (this.__writeLocked())
-      throw new Error(`This ManagedModel is locked and ${aKey} cannot be changed to ${aValue}`);
-    return aValue;
-  };
   prop = prop.meta({
     managedModel: true,
     type: aType
