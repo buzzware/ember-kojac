@@ -37,7 +37,7 @@ export default class {
 			break;
 		}
 		if (!newClass) {
-			var ns = this.namespace;
+			var ns = this.namespace || window;
 			var r = KojacUtils.keyResource(aKey);
 			if (r && (r[0]==r[0].toUpperCase()) && _.isFunction(ns[r]))
 				newClass = ns[r];

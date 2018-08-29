@@ -16,6 +16,12 @@ var ManagedModel = EmberObject.extend({
     this.__writeLockedFlag = false;
   },
 
+  // convenience function eg. var thing = Thing.create({size: large}).locked();
+  lock() {
+    this.__writeLock();
+    return this;
+  },
+
   __writeLock() {
     if (!this.__writeSecret) {
       this.__writeSecret = Math.random()*Math.pow(2,50)+1000000;

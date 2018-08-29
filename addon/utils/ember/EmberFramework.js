@@ -6,6 +6,7 @@ import { set,get,setProperties } from '@ember/object';
 
 import _ from 'lodash';
 import bf from 'ember-kojac/utils/BuzzFunctions';
+import ManagedModel, { field } from 'ember-kojac/utils/ember/ManagedModel';
 
 var ef = class {
 
@@ -67,6 +68,19 @@ var ef = class {
 	setProperties(aObject,aPropertyValues) {
 		setProperties(aObject,aPropertyValues);
 	}
+
+  internalModifyModel(aObject, aPropertyValues) {
+	  if (aObject instanceof ManagedModel) {
+	    // !!! this is exactly how ManagedModel should NOT be used, but is done here to get things done right now
+      if (aObject.__writeLocked())
+        aObject.__withUnlocked(aObject.__writeSecret,()=>aObject.setProperties(aPropertyValues));
+      else
+        aObject.setProperties(aPropertyValues);
+    } else if (aObject.setProperties)
+      aObject.setProperties(aPropertyValues);
+    else
+      bf.copyProperties(aObject, aPropertyValues);
+  }
 
 	get(aObject,aProperty) {
 		return get(aObject,aProperty);

@@ -123,15 +123,12 @@ export default class {
 						var value = results[key];
 						if ((request_op.options.atomise !== false) && bf.isObjectStrict(value)) {  // we are atomising and this is an object
 							var existing = this.framework.cacheGet(this.cache, key);
-							var doUpdate = false; // don't update until we have a model mutable switch
-							//var doUpdate = bf.isObjectStrict(existing) && (op.options.cacheResults !== false);  // update if object is already in cache, and we are caching
+							//var doUpdate = false; // don't update until we have a model mutable switch
+							var doUpdate = bf.isObjectStrict(existing) && (request_op.options.cacheResults !== false);  // update if object is already in cache, and we are caching
 							if (doUpdate) {
 								this.framework.beginPropertyChanges(existing);
 								updatedObjects.push(existing);
-								if (existing.setProperties)
-									existing.setProperties(value);
-								else
-									_.copyProperties(existing, value);
+								this.framework.internalModifyModel(existing,value);
 								value = existing;
 							} else { // otherwise manufacture a new object from values
 								if ((request_op.options.manufacture !== false) && (this.objectFactory)) {

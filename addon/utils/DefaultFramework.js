@@ -23,6 +23,10 @@ export default class {
 		return aObject;
 	}
 
+  internalModifyModel(aObject, aPropertyValues) {
+	  return this.setProperties(aObject,aPropertyValues);
+  }
+
 	get(aObject, aProperty) {
 		return aObject[aProperty];
 	}
