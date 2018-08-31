@@ -74,7 +74,7 @@ export default class {
 				op.key = KojacUtils.keyResource(k);
 			if ((i===0) && result_key)
 				op.result_key = result_key;
-			op.value = KojacUtils.toJsono(v,op.options);
+			op.value = v;
 		}
 		if (this.chaining)
 			return this;
@@ -134,7 +134,7 @@ export default class {
         op.result_key = result_key;
       else
         op.result_key = isItem ? k : null;
-			op.value = KojacUtils.toJsono(v,op.options);
+			op.value = v;
 		}
 		if (this.chaining)
 			return this;
@@ -176,7 +176,7 @@ export default class {
 		op.options = _.extend({cacheResults: false, manufacture: false},aOptions || {});
 		op.params = (params && _.clone(params));
 		op.key = aKey;
-		op.value = KojacUtils.toJsono(aValue,op.options);
+		op.value = aValue;
 		if (this.chaining)
 			return this;
 		else

@@ -48,10 +48,11 @@ export default class extends KojacStoreBase {
     if (value === Boolean)
       value = undefined;
     result_key = (aRequestOp.result_key || aRequestOp.key);
+    var updates = KojacUtils.toJsono(aRequestOp.value,aRequestOp.options);
     if (bf.isObjectStrict(value))
-      _.extend(value, aRequestOp.value);
+      _.extend(value, updates);
     else
-      value = aRequestOp.value;
+      value = updates;
     simpleStorage.set(aRequestOp.key, value);
     // results = {};
     // results[result_key] = value;
@@ -112,7 +113,7 @@ export default class extends KojacStoreBase {
   }
 
   async createOp(aRequestOp) {
-    var value = _.clone(aRequestOp.value, true, true);
+    var value = _.clone(KojacUtils.toJsono(aRequestOp.value,aRequestOp.options), true, true);
     var id = value['id'] || -KojacUtils.createId();
     value.id = id;
     var resource = aRequestOp.key;
