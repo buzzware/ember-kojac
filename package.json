@@ -1,6 +1,6 @@
 {
   "name": "ember-kojac",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Kojac 2 as a ember-cli addon.",
   "keywords": [
     "ember-addon"
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "ember-cli-babel": "^6.16.0",
+    "ember-cli-babel": "^6.18.0",
     "ember-lodash": "^4.17.5",
     "extendable-error-class": "^0.1.1",
     "jquery": "^3.3.1",
@@ -53,7 +53,7 @@
     "ember-source": "~3.3.0",
     "ember-source-channel-url": "^1.0.1",
     "ember-try": "^0.2.23",
-    "error-control": "^0.1.8",
+    "error-control": "github:buzzware/error-control-js#aeca64451f72fb56f1f4e4e68ca434dbef963895",
     "eslint-plugin-ember": "^5.0.0",
     "eslint-plugin-node": "^6.0.1",
     "loader.js": "^4.2.3"

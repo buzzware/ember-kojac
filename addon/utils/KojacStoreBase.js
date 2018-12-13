@@ -2,7 +2,7 @@ import _ from 'lodash';
 import jQuery from 'jquery';
 import KojacUtils from 'ember-kojac/utils/KojacUtils';
 import OpResponse from 'ember-kojac/utils/OpResponse';
-import StandardException from 'error-control/dist/es/StandardException';
+import {StandardException} from 'error-control/dist/es/ErrorControl';
 import HttpErrors from 'error-control/dist/es/HttpErrors';
 
 /**

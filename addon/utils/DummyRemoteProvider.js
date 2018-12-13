@@ -3,7 +3,7 @@ import jQuery from 'jquery';
 import KojacUtils from 'ember-kojac/utils/KojacUtils';
 import KojacStoreBase from 'ember-kojac/utils/KojacStoreBase';
 import OpResponse from 'ember-kojac/utils/OpResponse';
-import StandardException from 'error-control/dist/es/StandardException';
+import {StandardException} from 'error-control/dist/es/ErrorControl';
 
 /**
  * A dummy RemoteProvider implementation for testing. Your own implementation, or a subclass of this may be used instead.
