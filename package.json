@@ -1,6 +1,6 @@
 {
   "name": "ember-kojac",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Kojac 2 as a ember-cli addon.",
   "keywords": [
     "ember-addon"
@@ -25,7 +25,7 @@
     "extendable-error-class": "^0.1.1",
     "jquery": "^3.3.1",
     "simplestorage.js": "^0.2.1",
-    "error-control": "~0.2.0"
+    "error-control": "~0.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.56",
