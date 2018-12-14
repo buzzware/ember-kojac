@@ -12,8 +12,7 @@ import DummyRemoteProvider from 'ember-kojac/utils/DummyRemoteProvider';
 
 import EmberFramework from 'ember-kojac/utils/ember/EmberFramework';
 
-import {StandardException} from 'error-control/dist/es/ErrorControl';
-import {NotFoundError} from 'error-control/dist/es/HttpErrors';
+import {StandardException,HttpErrors} from 'error-control/dist/es/ErrorControl';
 
 describe("Error Handling (requires web server)", function() {
 
@@ -60,7 +59,7 @@ describe("Error Handling (requires web server)", function() {
 		catch(e) {
 			response = e;
 		}
-		expect(response instanceof NotFoundError).to.be.true;
+		expect(response instanceof HttpErrors.NotFoundError).to.be.true;
 		var ajaxError = response.data;
 		expect(ajaxError).to.not.be.undefined;
 		expect(ajaxError.http_code).to.equal(404);

@@ -12,8 +12,7 @@ import KojacRemoteProvider from 'ember-kojac/utils/KojacRemoteProvider';
 
 import EmberFramework from 'ember-kojac/utils/ember/EmberFramework';
 
-import {StandardException} from 'error-control/dist/es/ErrorControl';
-import {ValidationFailed} from 'error-control/dist/es/UserErrors';
+import {StandardException,UserErrors} from 'error-control/dist/es/ErrorControl';
 
 describe("StandardException", function() {
 
@@ -117,10 +116,10 @@ describe("MyError", function() {
 describe('ValidationFailed', function() {
 
 	it("can be created and will have correct values", function() {
-		var se = new ValidationFailed();
-		expect(se.statusCode).to.equal(ValidationFailed.STATUS_CODE);
+		var se = new UserErrors.ValidationFailed();
+		expect(se.statusCode).to.equal(UserErrors.ValidationFailed.STATUS_CODE);
 		expect(se.statusCode).to.equal(422);
-		expect(se.message).to.equal(ValidationFailed.MESSAGE);
+		expect(se.message).to.equal(UserErrors.ValidationFailed.MESSAGE);
 		expect(se.message).to.equal('The requested operation was not successful due to validation errors.');
 		expect(se.human_name).to.equal('Validation Failed');
 	});
