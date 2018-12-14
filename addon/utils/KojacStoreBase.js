@@ -2,7 +2,7 @@ import _ from 'lodash';
 import jQuery from 'jquery';
 import KojacUtils from 'ember-kojac/utils/KojacUtils';
 import OpResponse from 'ember-kojac/utils/OpResponse';
-import {StandardException,HttpErrors} from 'error-control/dist/es/ErrorControl';
+import {StandardException,HttpErrors} from 'error-control/dist/es/ErrorControlPackage';
 
 /**
  * A dummy RemoteProvider implementation for testing. Your own implementation, or a subclass of this may be used instead.

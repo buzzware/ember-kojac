@@ -7,7 +7,7 @@ import KojacRequest from 'ember-kojac/utils/KojacRequest';
 import KojacUtils from 'ember-kojac/utils/KojacUtils';
 import KojacResponse from 'ember-kojac/utils/KojacResponse';
 import DefaultFramework from 'ember-kojac/utils/DefaultFramework';
-import {StandardException} from 'error-control/dist/es/ErrorControl';
+import {StandardException} from 'error-control/dist/es/ErrorControlPackage';
 
 /**
  * The Kojac core object

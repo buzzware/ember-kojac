@@ -12,7 +12,7 @@ import KojacRemoteProvider from 'ember-kojac/utils/KojacRemoteProvider';
 
 import EmberFramework from 'ember-kojac/utils/ember/EmberFramework';
 
-import {StandardException,UserErrors} from 'error-control/dist/es/ErrorControl';
+import {StandardException,UserErrors} from 'error-control/dist/es/ErrorControlPackage';
 
 describe("StandardException", function() {
 
