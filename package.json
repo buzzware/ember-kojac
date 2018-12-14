@@ -1,6 +1,6 @@
 {
   "name": "ember-kojac",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Kojac 2 as a ember-cli addon.",
   "keywords": [
     "ember-addon"
@@ -31,11 +31,11 @@
     "@babel/core": "^7.0.0-beta.56",
     "broccoli-asset-rev": "^2.7.0",
     "ember-ajax": "^3.0.0",
-    "ember-auto-import": "^1.2.19",
     "ember-buffered-proxy": "^1.0.0",
     "ember-cli": "~3.3.0",
     "ember-cli-chai": "^0.5.0",
     "ember-cli-dependency-checker": "^2.0.0",
+    "ember-cli-es6-transform": "0.0.5",
     "ember-cli-eslint": "^4.2.1",
     "ember-cli-htmlbars": "^2.0.1",
     "ember-cli-htmlbars-inline-precompile": "^1.0.0",

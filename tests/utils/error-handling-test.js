@@ -12,7 +12,7 @@ import DummyRemoteProvider from 'ember-kojac/utils/DummyRemoteProvider';
 
 import EmberFramework from 'ember-kojac/utils/ember/EmberFramework';
 
-import {StandardException,HttpErrors} from 'error-control/dist/es/ErrorControlPackage';
+import {StandardException,HttpErrors} from 'error-control';
 
 describe("Error Handling (requires web server)", function() {
 
