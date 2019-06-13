@@ -127,7 +127,14 @@ var ef = class {
 
 	_descriptorFor(aObject,aKey,aMeta=null) {
     var m = aMeta || Ember.meta(aObject);
-    return (m && m._parent && m._parent._descriptors && m._parent._descriptors[aKey]) || null;
+    let descriptors = (m && m._parent && m._parent._descriptors) || null;
+    if (!descriptors)
+      return null;
+    if (descriptors instanceof Map) { // newer ember
+      return descriptors.get(aKey) || null;
+    } else {
+      return descriptors[aKey] || null;
+    }
   }
 
   _metaFor(aObject,aKey,aMeta=null) {
