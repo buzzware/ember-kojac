@@ -89,6 +89,8 @@ var field = function(aType) {
       return result;
     },
     set: function (aKey,aValue) {
+      if (!this.__writeLocked)
+        throw new Error(`__writeLocked is missing. Make sure this classing using field() inherits from ManagedModel`);
       if (this.__writeLocked())
         throw new Error(`This ManagedModel is locked and ${aKey} cannot be changed to ${aValue}`);
       return aValue;

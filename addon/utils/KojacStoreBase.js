@@ -2,8 +2,7 @@ import _ from 'lodash';
 import jQuery from 'jquery';
 import KojacUtils from 'ember-kojac/utils/KojacUtils';
 import OpResponse from 'ember-kojac/utils/OpResponse';
-import * as StandardExceptions from 'ember-kojac/utils/standard_exceptions/StandardExceptions';
-let StandardException = StandardExceptions.StandardException;
+import {StandardException,HttpErrors} from 'error-control';
 
 /**
  * A dummy RemoteProvider implementation for testing. Your own implementation, or a subclass of this may be used instead.
@@ -44,7 +43,7 @@ export default class {
 			}
 			resultError.headers = xhr.getAllResponseHeaders();
 			resultError.response = xhr.responseText;
-			var c = StandardExceptions.classForStatusCode(resultError.http_code);
+			var c = HttpErrors.classForStatusCode(resultError.http_code);
 			var e = new c();
 			e.message = resultError.message;
 			e.data = resultError;

@@ -12,9 +12,7 @@ import KojacRemoteProvider from 'ember-kojac/utils/KojacRemoteProvider';
 
 import EmberFramework from 'ember-kojac/utils/ember/EmberFramework';
 
-import StandardException from 'ember-kojac/utils/standard_exceptions/StandardExceptions';
-//import {declareException} from 'ember-kojac/utils/standard_exceptions/StandardExceptions';
-import {ValidationFailed} from 'ember-kojac/utils/standard_exceptions/Application';
+import {StandardException,UserErrors} from 'error-control';
 
 describe("StandardException", function() {
 
@@ -22,7 +20,7 @@ describe("StandardException", function() {
 		var e = new StandardException();
 		expect(e.constructor).to.equal(StandardException);
 		expect(e.message).to.equal(StandardException.MESSAGE);
-		expect(e.status).to.equal(StandardException.STATUS);
+		expect(e.statusCode).to.equal(StandardException.STATUS_CODE);
 		expect(e.inner).to.equal(null);
 		expect(e.name).to.equal('StandardException');
 		expect(e.human_name).to.equal('Standard Exception');
@@ -49,7 +47,7 @@ describe("StandardException", function() {
 	it('can be created with values',function() {
 		var e = new StandardException('failed',499,new Error('bang'));
 		expect(e.constructor).to.equal(StandardException);
-		expect(e.status).to.equal(499);
+		expect(e.statusCode).to.equal(499);
 		expect(e.message).to.equal('failed');
 		expect(e.inner.message).to.equal('bang');
 	});
@@ -66,17 +64,17 @@ describe("MyError", function() {
 
 	class MyError extends StandardException {
 		constructor(message=null,status=null,inner=null) {
-			super(message || MyError.MESSAGE,status || MyError.STATUS,inner);
+			super(message || MyError.MESSAGE,status || MyError.STATUS_CODE,inner);
 		}
 	}
 	MyError.MESSAGE = 'This is MyError.';
-	MyError.STATUS = 499;
+	MyError.STATUS_CODE = 499;
 
 	it('can create MyError which extends StandardException with defaults',function() {
 		var e = new MyError();
 		expect(e.constructor).to.equal(MyError);
 		expect(e.message).to.equal(MyError.MESSAGE);
-		expect(e.status).to.equal(MyError.STATUS);
+		expect(e.statusCode).to.equal(MyError.STATUS_CODE);
 		expect(e.inner).to.equal(null);
 		expect(e.name).to.equal('MyError');
 		expect(e.human_name).to.equal('My Error');
@@ -103,7 +101,7 @@ describe("MyError", function() {
 	it('can create MyError with values',function() {
 		var e = new MyError('failed',499,new Error('bang'));
 		expect(e.constructor).to.equal(MyError);
-		expect(e.status).to.equal(499);
+		expect(e.statusCode).to.equal(499);
 		expect(e.message).to.equal('failed');
 		expect(e.inner.message).to.equal('bang');
 	});
@@ -118,10 +116,10 @@ describe("MyError", function() {
 describe('ValidationFailed', function() {
 
 	it("can be created and will have correct values", function() {
-		var se = new ValidationFailed();
-		expect(se.status).to.equal(ValidationFailed.STATUS);
-		expect(se.status).to.equal(422);
-		expect(se.message).to.equal(ValidationFailed.MESSAGE);
+		var se = new UserErrors.ValidationFailed();
+		expect(se.statusCode).to.equal(UserErrors.ValidationFailed.STATUS_CODE);
+		expect(se.statusCode).to.equal(422);
+		expect(se.message).to.equal(UserErrors.ValidationFailed.MESSAGE);
 		expect(se.message).to.equal('The requested operation was not successful due to validation errors.');
 		expect(se.human_name).to.equal('Validation Failed');
 	});
