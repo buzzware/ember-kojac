@@ -15,6 +15,10 @@ bower.json
 ember-cli-build.js
 testem.js
 
+.idea
+.iml
+
+
 # ember-try
 .node_modules.ember-try/
 bower.json.ember-try
